@@ -3,6 +3,7 @@ import threading
 from fuzzywuzzy import fuzz
 
 import STT
+import TTS
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -29,6 +30,7 @@ def silero_test(filename):
     print('orig   = ', str_ex)
     print('% = ', pr)
     print()
+    TTS.test_en(example_text=res)
     return
 
 
