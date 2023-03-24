@@ -1,6 +1,7 @@
 # This is a sample Python script.
 import threading
 from fuzzywuzzy import fuzz
+from datetime import datetime
 
 import STT
 import TTS
@@ -12,6 +13,7 @@ import time
 
 str_ex = 'the birch canoe slid on the smooth planks glue the sheet to the dark blue background it\'s easy to tell the ' \
          'depth of a well four hours of steady work faced us'
+timer = 0
 
 
 def recognize_cmd(cmd: str, name):
@@ -25,6 +27,7 @@ def recognize_cmd(cmd: str, name):
 
 
 def silero_test(count, filename):
+    start_time = datetime.now()
     res = STT.silero_stt_test(filename)
     """pr = recognize_cmd(res, 'silero')
         print('threading ------- ', count)
@@ -32,7 +35,12 @@ def silero_test(count, filename):
     print('orig   = ', str_ex)
     print('% = ', pr)
     print()"""
+    print('thread read -', count, 'time -', datetime.now() - start_time)
+
+    start_time = datetime.now()
     TTS.test_en(example_text=res)
+    print('thread write -', count, 'time -', datetime.now() - start_time)
+
     return
 
 
@@ -43,7 +51,7 @@ def test_cpu():
     print('pid = ', pid)
     print('cpu_count = ', cpu_count)
     while time.time() < time_end:
-        print(pid.cpu_percent(interval=1.0) / cpu_count)
+        print('cpu =', pid.cpu_percent(interval=1.0) / cpu_count, '%')
 
 
 # Press the green button in the gutter to run the script.
@@ -54,7 +62,7 @@ if __name__ == '__main__':
     task.start()
     task_silero_test = []
     count = 0
-    while count < 10:
+    while count < 1:
         count += 1
         task_silero_test.append(threading.Thread(name="listen_silero_" + str(count), target=silero_test,
                                                  kwargs={"count": count, "filename": name_file1}))
