@@ -8,11 +8,11 @@ from silero.utils import *
 device = torch.device('cpu')
 local_file = 'en_v6.jit'
 
-model = torch.jit.load(local_file, map_location=device)
-model.eval()
-decoder = Decoder(model.labels)
 
 def silero_stt_test(name):
+    model = torch.jit.load(local_file, map_location=device)
+    model.eval()
+    decoder = Decoder(model.labels)
 
     test_files = glob(name)
     batches = split_into_batches(test_files, batch_size=10)

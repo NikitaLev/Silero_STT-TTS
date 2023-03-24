@@ -19,7 +19,6 @@ speaker = 'en_0'
 
 
 def test_en(example_text=''):
-
     audio_paths = model.save_wav(text=example_text,
                                  speaker=speaker,
                                  sample_rate=sample_rate
